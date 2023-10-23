@@ -1,0 +1,41 @@
+
+# função que ira cifrar e decifrar de acordo com a oplção do ususario   
+def cifra_vigenere(texto, chave, modo):
+    alfabeto = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    texto = texto.upper()  # Convertendo o texto de entrada para maiúsculas
+    chave = chave.upper()  # Convertendo a chave para maiúsculas
+    cifrado = ''
+
+    # variaveis pra evitar magic number
+    cifrar = 1
+    decifrar = 2
+
+    for i in range(len(texto)):
+        if texto[i] in alfabeto:
+            if modo == cifrar:
+                # Cifragem: deslocando o caractere da mensagem pela 
+                # posição do caractere correspondente na chave de cifragem
+                caractere_cifrado = alfabeto[(alfabeto.index(texto[i]) + alfabeto.index(chave[i % len(chave)])) % 26]
+            elif modo == decifrar:
+                # Decifragem: desloca o caractere da mensagem pelo 
+                # inverso da posição do caractere correspondente na chave de decifrar
+                caractere_cifrado = alfabeto[(alfabeto.index(texto[i]) - alfabeto.index(chave[i % len(chave)])) % 26]
+            cifrado += caractere_cifrado
+        else:
+            cifrado += texto[i]  # Mantenha caracteres não alfabéticos inalterados (revisar isso)
+    return cifrado
+
+mensagem_tratada = ''
+
+modo = input('Escolha 1 para cifrar e 2 para decifrar:')
+# transformando o valor pra inteiro
+modo = int(modo)
+# a escolha do usuario, pegando os valores texto e a chave da cifra
+texto = input("Digite a palavra:")
+chave = input("Digite a chave da cifra:")
+# chamnando a função de cripitografia e enviando os parametros para a função
+mensagem_tratada = cifra_vigenere(texto, chave ,modo)
+
+# Resultado
+
+print("Sua escolha foi: ", modo,"\n Mensagem tratada:", mensagem_tratada)
